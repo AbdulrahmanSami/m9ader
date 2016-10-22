@@ -1,5 +1,5 @@
+# -*- coding: utf-8  -*-
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 
@@ -25,11 +25,11 @@ gender_choices = (
     ('M', u'طلاب'),
 )
 university_choics = (
-    ('KHS' , u'جامعة الملك سعود بن عبدالعزيز للعلوم الصحية')
-    ('KFU', u'جامعة الملك فيصل')
-    ('KSAU' ,u'جامعة الملك سعود')
-    ('PSU' ,u'جامعة الأمير سلطان')
-    ('KSU' , u'جامعة الملك سلمان الخرج')
+    ('KHS' , u'جامعة الملك سعود بن عبدالعزيز للعلوم الصحية'),
+    ('KFU', u'جامعة الملك فيصل'),
+    ('KSAU' ,u'جامعة الملك سعود'),
+    ('PSU' ,u'جامعة الأمير سلطان'),
+    ('KSU' , u'جامعة الملك سلمان الخرج'),
     )
 blocks_choices= (
     ('FB',u'Foundation Block'),
@@ -65,6 +65,7 @@ class College(models.Model):
     city = models.CharField(max_length=1, choices=city_choices, verbose_name=u"المدينة")
     gender = models.CharField(max_length=1, choices=gender_choices, verbose_name=u"الجنس")
 class Profile(models.Model):
+
     is_student = models.BooleanField(default=True,
                                      verbose_name=u"طالب؟")
     ar_first_name = models.CharField(max_length=30,
@@ -92,6 +93,10 @@ class Profile(models.Model):
     batch = models.IntegerField(max_length=2,
                                 verbose_name=u'الدفعة')
     profile_picture = models.ImageField(width_field=60,height_field=60)
+class Block (models.Model):
+    title = models.CharField(max_length=120, verbose_name=u'اسم البلوك ')
+    cover = models.FileField(upload_to='covers', blank=True, null=True)
+    is_clinical = models.CharField(max_length=1,choices=clinical_choices)
 
 class Book (models.Model):
     title = models.CharField(max_length=120,verbose_name=u'اسم الكتاب')
@@ -113,23 +118,20 @@ class Book (models.Model):
                                            auto_now_add=True)
     blocks = models.CharField (max_length=2, choices=university_choics, verbose_name=u"البلوكات المستهدفة")
 
-    block = models.ForeignKey(Block,on_delete=models.CASCADE)
+
 class Comment (models.Model):
     submitter = models.ForeignKey(User, null=True,
                                   on_delete=models.SET_NULL,)
     description = models.CharField(verbose_name=u"وصف التقييم", blank=True, help_text=u"اختياري")
     submission_date = models.DateTimeField(u"تاريخ الاضافة",
                                            auto_now_add=True)
-    book = models.ForeignKey(Book,on_delete=models.CASCADE)
+
     rating = models.CharField(max_length=1, choices=rating_choices)
-class comment_rating:
+class comment_rating (models.Model):
     submitter = models.ForeignKey(User, null=True,
                                   on_delete=models.SET_NULL, )
+
     '''comment_id=?? which one ?'''
     rating = models.CharField(max_length=1, choices=rating_choices)
 ''' tags ?? do we use tagit and how + we dont want to make it limited so if we use choices we need to add
 a function that lets the user add new tags'''
-class Block:
-    title = models.CharField(max_length=120, verbose_name=u'اسم البلوك ')
-    cover = models.FileField(upload_to='covers', blank=True, null=True)
-    is_clinical = models.CharField(max_length=1,choices=clinical_choices)
