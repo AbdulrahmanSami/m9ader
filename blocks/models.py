@@ -98,8 +98,8 @@ class Book (models.Model):
 
     description = models.CharField(verbose_name=u"وصف الكتاب", blank=True, help_text=u"اختياري")
 
-    tags = TaggableManager(verbose_name=u"التصنيفات",
-                           help_text=u"ما التصانيف الإنجليزية التي تراها ملائمة؟ (مطلوبة ومفصولة بفواصل، مثلا: \"Respiratory, Physiology\")")
+    '''tags = TaggableManager(verbose_name=u"التصنيفات",
+                           help_text=u"ما التصانيف الإنجليزية التي تراها ملائمة؟ (مطلوبة ومفصولة بفواصل، مثلا: \"Respiratory, Physiology\")")'''
 
     submitter = models.ForeignKey(User, null=True,
                                   on_delete=models.SET_NULL,
@@ -112,12 +112,15 @@ class Book (models.Model):
     submission_date = models.DateTimeField(u"تاريخ الرفع",
                                            auto_now_add=True)
     blocks = models.CharField (max_length=2, choices=university_choics, verbose_name=u"البلوكات المستهدفة")
+
+    block = models.ForeignKey(Block,on_delete=models.CASCADE)
 class Comment (models.Model):
     submitter = models.ForeignKey(User, null=True,
                                   on_delete=models.SET_NULL,)
     description = models.CharField(verbose_name=u"وصف التقييم", blank=True, help_text=u"اختياري")
     submission_date = models.DateTimeField(u"تاريخ الاضافة",
                                            auto_now_add=True)
+    book = models.ForeignKey(Book,on_delete=models.CASCADE)
     rating = models.CharField(max_length=1, choices=rating_choices)
 class comment_rating:
     submitter = models.ForeignKey(User, null=True,
