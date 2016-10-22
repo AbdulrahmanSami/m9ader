@@ -116,7 +116,7 @@ class Book (models.Model):
 
     submission_date = models.DateTimeField(u"تاريخ الرفع",
                                            auto_now_add=True)
-    blocks = models.CharField (max_length=2, choices=university_choics, verbose_name=u"البلوكات المستهدفة")
+    blocks = models.CharField (max_length=2, choices=blocks_choices, verbose_name=u"البلوكات المستهدفة")
 
 
 class Comment (models.Model):
