@@ -56,6 +56,10 @@ rating_choices=(
     ('2',u'2 Stars out of 5'),
     ('1',u'1 Stars out of 5'),
 )
+clinical_choices=(
+    ('Yes',u'It is clinical'),
+    ('NO',u'It is not clinical')
+)
 class College(models.Model):
     name = models.CharField(max_length=1, choices=college_choices, verbose_name=u"الاسم")
     city = models.CharField(max_length=1, choices=city_choices, verbose_name=u"المدينة")
@@ -125,3 +129,4 @@ a function that lets the user add new tags'''
 class Block:
     title = models.CharField(max_length=120, verbose_name=u'اسم البلوك ')
     cover = models.FileField(upload_to='covers', blank=True, null=True)
+    is_clinical = models.CharField(max_length=1,choices=clinical_choices)
