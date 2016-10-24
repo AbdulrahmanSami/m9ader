@@ -72,7 +72,6 @@ class College(models.Model):
 
 class BookCategories(models.Model):
     name = models.CharField(max_length=100)
-''' category = models.ForeignKey('categories.Category')'''
 
 class Profile(models.Model):
     user = models.OneToOneField(User,
@@ -121,12 +120,14 @@ class Book (models.Model):
 
     submission_date = models.DateTimeField(u"تاريخ الرفع",
                                            auto_now_add=True)
+    bLook = models.ManyToManyRel(Block, on_delete=models.CASCADE)
+'''category= models.'''
 
 class Block (models.Model):
     title = models.CharField(max_length=120, verbose_name=u'اسم البلوك ')
     cover = models.FileField(upload_to='covers', blank=True, null=True)
-    is_clinical = models.CharField(max_length=1,choices=clinical_choices)
-    books = models.ForeignKey(Book, on_delete=models.CASCADE)
+    is_clinical = models.BooleanField()
+
 
 
 class Comment (models.Model):
@@ -141,8 +142,8 @@ class Comment (models.Model):
 class CommentRating (models.Model):
     submitter = models.ForeignKey(User, null=True,
                                   on_delete=models.SET_NULL, )
-    is_positive=models.BooleanField
+    is_positive=models.BooleanField()
     '''comment_id=?? which one ?'''
-    rating = models.PositiveSmallIntegerField
+    rating = models.PositiveSmallIntegerField()
 ''' tags ?? do we use tagit and how + we dont want to make it limited so if we use choices we need to add
 a function that lets the user add new tags'''
