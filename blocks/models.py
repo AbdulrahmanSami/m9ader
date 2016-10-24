@@ -141,7 +141,7 @@ class Comment (models.Model):
 class CommentRating (models.Model):
     submitter = models.ForeignKey(User, null=True,
                                   on_delete=models.SET_NULL, )
-    is_positive=models.CharField(max_length=1,choices=comment_choices)
+    is_positive=models.BooleanField
     '''comment_id=?? which one ?'''
     rating = models.PositiveSmallIntegerField
 ''' tags ?? do we use tagit and how + we dont want to make it limited so if we use choices we need to add
