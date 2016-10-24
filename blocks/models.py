@@ -72,9 +72,10 @@ class College(models.Model):
 
 class BookCategories(models.Model):
     name = models.CharField(max_length=100)
-    category = models.ForeignKey('categories.Category')
+''' category = models.ForeignKey('categories.Category')'''
+
 class Profile(models.Model):
-    user = models.OneToOneField(u'user',User,
+    user = models.OneToOneField(User,
                                 unique=True,
                                 related_name='profile')
 
@@ -99,14 +100,13 @@ class Profile(models.Model):
                                 blank=True,
                                 on_delete=models.SET_NULL,
                                 verbose_name=u'الكلية')
-    batch = models.IntegerField(max_length=2,
-                                verbose_name=u'الدفعة')
-    profile_picture = models.ImageField(width_field=60,height_field=60)
+    batch = models.PositiveSmallIntegerField(verbose_name=u'الدفعة')
+    profile_picture = models.FileField(upload_to='profile_pics', blank=True, null=True)
 
 class Book (models.Model):
     title = models.CharField(max_length=120,verbose_name=u'اسم الكتاب')
 
-    description = models.CharField(verbose_name=u"وصف الكتاب", blank=True, help_text=u"اختياري")
+    description = models.TextField(verbose_name=u"وصف الكتاب", blank=True, help_text=u"اختياري")
 
     '''tags = TaggableManager(verbose_name=u"التصنيفات",
                            help_text=u"ما التصانيف الإنجليزية التي تراها ملائمة؟ (مطلوبة ومفصولة بفواصل، مثلا: \"Respiratory, Physiology\")")'''
@@ -132,7 +132,7 @@ class Block (models.Model):
 class Comment (models.Model):
     submitter = models.ForeignKey(User, null=True,
                                   on_delete=models.SET_NULL,)
-    description = models.CharField(verbose_name=u"وصف التقييم", blank=True, help_text=u"اختياري")
+    description = models.TextField(verbose_name=u"وصف التقييم", blank=True, help_text=u"اختياري")
     submission_date = models.DateTimeField(u"تاريخ الاضافة",
                                            auto_now_add=True)
 
